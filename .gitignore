@@ -6,3 +6,6 @@ tests/
 examples/
 .sass-cache/
 dist/
+
+.ruby-version
+.ruby-gemset

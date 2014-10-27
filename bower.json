@@ -1,0 +1,16 @@
+{
+  "name": "peekaboo",
+  "description": "Content visibility manager",
+  "keywords": "scroll js",
+  "repository": "http://github.com/the-cocktail/TCToolbox#Peekaboo",
+  "private": true,
+  "main": [
+    "dist/Peekaboo.js",
+    "dist/Peekaboo.css"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {}
+}

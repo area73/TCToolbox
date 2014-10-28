@@ -1,11 +1,5 @@
+bower_components/
+.grunt
 node_modules/
-
-/bower.json
-src/
-tests/
-examples/
 .sass-cache/
-dist/
-
-.ruby-version
-.ruby-gemset
+_SpecRunner.html

@@ -1,0 +1,16 @@
+{
+  "name": "sticky",
+  "description": "Sticky elements",
+  "keywords": "sticky js",
+  "repository": "git@github.com:the-cocktail/TCToolbox.git#Sticky",
+  "private": true,
+  "main": [
+    "dist/Sticky.js",
+    "dist/Sticky.css"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {}
+}

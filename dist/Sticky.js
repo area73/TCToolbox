@@ -30,6 +30,7 @@ this.TCT.Sticky = (function(){
       }
     },
     stick: function(){
+      
       if(this.sticked) return;
       this.element.addClass(this.options.sticky_class);
       this.sticked = true;
@@ -42,12 +43,15 @@ this.TCT.Sticky = (function(){
       this.element.trigger("unsticked");
     },
     calculate_top: function(scroll_top, resize){
-      var top = this.element.data("stickt_element_top");
+      var top = this.element.data("sticky_element_top");
       if(!top || resize){
         top = this.element.offset().top;
-        this.element.data("stickt_element_top", top);
+        this.element.data("sticky_element_top", top);
       }
       return top;
+    },
+    reset: function(){
+      this.unstick();
     }
   });
   
@@ -90,22 +94,38 @@ this.TCT.Sticky = (function(){
     },
     stop: function(){
       if(!this.running) return this;
-      
+      this.resetElements();
       $(window).off(".sticky_scroll");
       this.running = false;
     },
     start: function(){
+      if(window.debuggg){
+        debugger;
+      }
       if(this.running) return this;
+
       
       $(window)
         .on("scroll.sticky_scroll", this.on_scroll)
         .on("resize.sticky_scroll", this.on_resize);
+      
       this.refresh();
       
       this.running = true;
       return this;
     },
-    
+    //  ===================
+
+    //  ==================/
+    resetElements: function(){
+      var i = 0,
+          totalElements = this.elements.length,
+          element;
+      for(i; i < totalElements; i++){
+        element = this.elements[i];
+        element.reset();
+      }
+    },
     //  =============
 
     //  =============

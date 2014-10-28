@@ -72,6 +72,75 @@ describe("Sticky", function(){
     });
   });
   describe("when running", function(){
+    it("should stick the elements while scrolling", function(done){
+      window.scrollTo(0, 0)
+      spyOnEvent("[data-sticky-block]:nth(1)", "sticked");
+      spyOnEvent("[data-sticky-block]:nth(2)", "sticked")
+      TCT.Sticky.instance().start();
+      expect("sticked").not.toHaveBeenTriggeredOn("[data-sticky-block]:nth(1)");
+      window.scrollTo(0, 200)
+      _.delay(function(){
+        expect("sticked").toHaveBeenTriggeredOn("[data-sticky-block]:nth(1)");  
+        expect("sticked").not.toHaveBeenTriggeredOn("[data-sticky-block]:nth(2)");
+        window.scrollTo(0, 600);
+        _.delay(function(){
+          expect("sticked").toHaveBeenTriggeredOn("[data-sticky-block]:nth(2)");
+          done()  
+        })        
+      })      
+    })
+    it("should unstick the elements while scrolling", function(done){
+      window.scrollTo(0, 600)
+      spyOnEvent("[data-sticky-block]:nth(1)", "unsticked");
+      spyOnEvent("[data-sticky-block]:nth(2)", "unsticked");
+      TCT.Sticky.instance().start();
+      expect("unsticked").not.toHaveBeenTriggeredOn("[data-sticky-block]:nth(2)");
+      window.scrollTo(0, 599)
+      _.delay(function(){
+        expect("unsticked").toHaveBeenTriggeredOn("[data-sticky-block]:nth(2)");  
+        expect("unsticked").not.toHaveBeenTriggeredOn("[data-sticky-block]:nth(1)");
+        window.scrollTo(0, 199);
+        _.delay(function(){
+          expect("unsticked").toHaveBeenTriggeredOn("[data-sticky-block]:nth(2)");
+          done()  
+        })        
+      })      
+    })
+  });
 
+  describe("when registering", function(){
+    it("should be able to assign the 'top' property through options", function(done){
+      window.scrollTo(0, 600)
+      var div = StickyHelpers.createTestDiv(200,200);
+      div.attr("id", "newly-registered-div")
+      spyOnEvent("#newly-registered-div", "sticked")
+      StickyHelpers.container.append(div);
+      TCT.Sticky.instance().register(div, {
+        top: 200
+      });
+      window.scrollTo(0,200);
+      _.delay(function(){
+        expect("sticked").toHaveBeenTriggeredOn("#newly-registered-div");  
+        done();
+      })
+    })
+
+    it("should be able to assign the 'top' property as a function through options", function(done){
+      window.scrollTo(0, 600)
+      var div = StickyHelpers.createTestDiv(200,200);
+      div.attr("id", "newly-registered-div-2")
+      spyOnEvent("#newly-registered-div-2", "sticked")
+      StickyHelpers.container.append(div);
+      TCT.Sticky.instance().register(div, {
+        top: function(){
+          return 500;
+        }
+      });
+      window.scrollTo(0,500);
+      _.delay(function(){
+        expect("sticked").toHaveBeenTriggeredOn("#newly-registered-div-2");  
+        done();
+      })
+    })
   })
 });

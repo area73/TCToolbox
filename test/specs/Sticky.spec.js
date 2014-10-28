@@ -14,37 +14,37 @@ describe("Sticky", function(){
     }).toThrow(new Error("TCT.Sticky is a singleton. Please use TCT.Sticky.instance()"));
   });
   describe("when running", function(){
-    it("should fire the on_scroll callback when scrolling", function(done){
-      spyOn(instance, "on_scroll").and.callThrough();
+    it("should fire the onScroll callback when scrolling", function(done){
+      spyOn(instance, "onScroll").and.callThrough();
       instance.start();
       window.scrollTo(0, 100)
       setTimeout(function(){        
-        expect(instance.on_scroll).toHaveBeenCalled();
+        expect(instance.onScroll).toHaveBeenCalled();
         instance.stop();
         done();
       }, 100);
     })
-    it("should fire the on_resize callback when resizing the page", function(done){
-      spyOn(instance, "on_resize").and.callThrough();
+    it("should fire the onResize callback when resizing the page", function(done){
+      spyOn(instance, "onResize").and.callThrough();
       instance.start();
       $(window).trigger("resize")
       setTimeout(function(){        
-        expect(instance.on_resize).toHaveBeenCalled();
+        expect(instance.onResize).toHaveBeenCalled();
         instance.stop();
         done();
       }, 100);
     })
   });
   describe("when not running", function(){
-    it("should fire the on_scroll callback when scrolling", function(){
-      spyOn(instance, "on_scroll").and.callThrough();
+    it("should fire the onScroll callback when scrolling", function(){
+      spyOn(instance, "onScroll").and.callThrough();
       window.scrollTo(0, 100)
-      expect(instance.on_scroll).not.toHaveBeenCalled();
+      expect(instance.onScroll).not.toHaveBeenCalled();
     })
-    it("should fire the on_resize callback when resizing the page", function(){
-      spyOn(instance, "on_resize").and.callThrough();
+    it("should fire the onResize callback when resizing the page", function(){
+      spyOn(instance, "onResize").and.callThrough();
       $(window).trigger("resize")
-      expect(instance.on_resize).not.toHaveBeenCalled();
+      expect(instance.onResize).not.toHaveBeenCalled();
     })
   });
   describe("when starting", function(){

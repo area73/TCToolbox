@@ -6,10 +6,10 @@ this.TCT.Sticky = (function(){
     this.element = element;
     this.options = $.extend({}, this.defaults, options);
     this.top = !this.options.top ?
-                  this.calculate_top :
+                  this.calculateTop :
                   typeof this.options.top == "function" ? 
-                    $.proxy(function(scroll_top){
-                      return this.options.top.call(this, scroll_top);
+                    $.proxy(function(scrollTop){
+                      return this.options.top.call(this, scrollTop);
                     }, this) :
                     $.proxy(function(){
                       return this.options.top;
@@ -20,7 +20,7 @@ this.TCT.Sticky = (function(){
   $.extend(StickyElement.prototype,{
     defaults: {
       top:0,
-      sticky_class: "sticky"
+      stickyClass: "sticky"
     },
     evaluate: function(top, resize){
       if(top >= this.top(top, resize)){
@@ -32,17 +32,17 @@ this.TCT.Sticky = (function(){
     stick: function(){
       
       if(this.sticked) return;
-      this.element.addClass(this.options.sticky_class);
+      this.element.addClass(this.options.stickyClass);
       this.sticked = true;
       this.element.trigger("sticked");
     },
     unstick: function(){
       if(!this.sticked) return;
-      this.element.removeClass(this.options.sticky_class);
+      this.element.removeClass(this.options.stickyClass);
       this.sticked = false;
       this.element.trigger("unsticked");
     },
-    calculate_top: function(scroll_top, resize){
+    calculateTop: function(scrollTop, resize){
       var top = this.element.data("sticky_element_top");
       if(!top || resize){
         top = this.element.offset().top;
@@ -61,8 +61,8 @@ this.TCT.Sticky = (function(){
             (Sticky._instance && Sticky._instance != this))
           throw(new Error("TCT.Sticky is a singleton. Please use TCT.Sticky.instance()"));
         
-        this.on_scroll = $.proxy(this.on_scroll, this);
-        this.on_resize = $.proxy(this.on_resize, this);
+        this.onScroll = $.proxy(this.onScroll, this);
+        this.onResize = $.proxy(this.onResize, this);
         
         this.running = false;
         this.elements = [];
@@ -85,11 +85,11 @@ this.TCT.Sticky = (function(){
       return this;
     },
     refresh: function(){
-      var scroll_top = $(window).scrollTop(),
-          sticky_element, index;
+      var scrollTop = $(window).scrollTop(),
+          stickyElement, index;
       for(index = this.elements.length; index--;){
-        sticky_element = this.elements[index];
-        sticky_element.evaluate(scroll_top, true);
+        stickyElement = this.elements[index];
+        stickyElement.evaluate(scrollTop, true);
       }
     },
     stop: function(){
@@ -106,8 +106,8 @@ this.TCT.Sticky = (function(){
 
       
       $(window)
-        .on("scroll.sticky_scroll", this.on_scroll)
-        .on("resize.sticky_scroll", this.on_resize);
+        .on("scroll.sticky_scroll", this.onScroll)
+        .on("resize.sticky_scroll", this.onResize);
       
       this.refresh();
       
@@ -129,10 +129,10 @@ this.TCT.Sticky = (function(){
     //  =============
     //  = Callbacks =
     //  =============
-    on_scroll: function(event){
+    onScroll: function(event){
       this.refresh();
     },
-    on_resize: function(event){
+    onResize: function(event){
       this.refresh();
     }
   });

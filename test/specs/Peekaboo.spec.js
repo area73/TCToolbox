@@ -16,13 +16,13 @@ describe("TCT.Peekaboo", function(){
   describe("instance method", function(){
     var instance = TCT.Peekaboo.instance();
 
-    describe("register_element", function(){
+    describe("registerElement", function(){
       it("should give each element an uid", function(){
         var element = $("[data-peekaboo-block]:nth(0)")
-        instance.register_element(element);
+        instance.registerElement(element);
         expect(element.data("peekaboo_id")).toBeDefined();
         var el = $("[data-peekaboo-block]:nth(1)");
-        instance.register_element(el);
+        instance.registerElement(el);
         expect(element.data("peekaboo_id")).not.toEqual(el.data("peekaboo_id"));
       });
       it("should create a PeekabooElement", function(){
@@ -37,12 +37,12 @@ describe("TCT.Peekaboo", function(){
       it("should measure the viewport", function(){
         // Window height is configured at Gruntfile
         instance.measure();
-        expect(instance.viewport_height).toBe($(window).height());
+        expect(instance.viewportHeight).toBe($(window).height());
       })
       it("should measure the document", function(){
         // Window height is configured at Gruntfile
         instance.measure();
-        expect(instance.document_height).toBe($(document).height() - $(window).height());
+        expect(instance.documentHeight).toBe($(document).height() - $(window).height());
       })
     })
   })
@@ -116,7 +116,7 @@ describe("TCT.Peekaboo", function(){
             expect(e.state).toBe("visible");
             expect(e.direction).toBe("up");
             expect(e.scroll).toBe(100);
-            expect(e.prev_scroll).toBe(600);
+            expect(e.prevScroll).toBe(600);
             done();
           });
           window.scrollTo(0, 100);    
@@ -129,7 +129,7 @@ describe("TCT.Peekaboo", function(){
         expect(e.state).toBe("hidden");
         expect(e.direction).toBe("down");
         expect(e.scroll).toBe(600);
-        expect(e.prev_scroll).toBe(0);
+        expect(e.prevScroll).toBe(0);
         done();
       });
       _.delay(function(){
@@ -145,7 +145,7 @@ describe("TCT.Peekaboo", function(){
             expect(e.state).toBe("hidden");
             expect(e.direction).toBe("up");
             expect(e.scroll).toBe(100);
-            expect(e.prev_scroll).toBe(600);
+            expect(e.prevScroll).toBe(600);
             done();
           });
           window.scrollTo(0, 100);

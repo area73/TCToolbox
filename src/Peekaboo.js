@@ -12,13 +12,13 @@ this.TCT.Peekaboo = (function(TCT){
         if(!singletonEnforcer || !(singletonEnforcer instanceof PeekabooSingletonEnforcer))
           throw(new Error("TCT.Peekaboo is a singleton. Please use TCT.Peekaboo.instance()"));
         this.running = false;
-        _.bindAll(this, "on_scroll", "on_resize");
+        _.bindAll(this, "onScroll", "onResize");
         this.elements = [];
-        this.on_scroll = _.debounce(this.on_scroll, 100);
-        this.on_resize = _.debounce(this.on_resize, 100);
+        this.onScroll = _.debounce(this.onScroll, 100);
+        this.onResize = _.debounce(this.onResize, 100);
         this.measure();
       },
-      peekaboo_instance;
+      peekabooInstance;
 
   //  ====================================
   //  = PeekabooElement Instance methods =
@@ -39,15 +39,15 @@ this.TCT.Peekaboo = (function(TCT){
       this.top = element.offset().top + _.result(this.options, "offsetTop");
       this.bottom = element.offset().top + element.outerHeight() - _.result(this.options,"offsetBottom");
     },
-    exec: function(scroll_position, viewport_height, prev_scroll, direction){
+    exec: function(scrollPosition, viewportHeight, prevScroll, direction){
       var state,
-          visible_viewport = scroll_position + viewport_height,
+          visibleViewport = scrollPosition + viewportHeight,
           visible;
       if(
         // Si ya hemos pasado el tope del elemento, pero aun no hemos dejado de verlo
-        (scroll_position >= this.top && scroll_position < this.bottom) || 
+        (scrollPosition >= this.top && scrollPosition < this.bottom) || 
         // Si el elemento aun no llega arriba, pero se alcanza a ver
-        (scroll_position < this.top && this.top < visible_viewport)
+        (scrollPosition < this.top && this.top < visibleViewport)
       ){
         state = "visible";
       }else{
@@ -58,8 +58,8 @@ this.TCT.Peekaboo = (function(TCT){
         this.visible = visible;
         $(this.element).trigger( $.Event("peekaboo_state_change", {
           state: state,
-          scroll: scroll_position,
-          prev_scroll: prev_scroll,
+          scroll: scrollPosition,
+          prevScroll: prevScroll,
           direction: direction
         }) );
       }
@@ -83,13 +83,13 @@ this.TCT.Peekaboo = (function(TCT){
   //  ==========================
   $.extend(Peekaboo,{
     instance: function(){
-      if(!peekaboo_instance)
-        peekaboo_instance = new Peekaboo(new PeekabooSingletonEnforcer());
-      return peekaboo_instance;
+      if(!peekabooInstance)
+        peekabooInstance = new Peekaboo(new PeekabooSingletonEnforcer());
+      return peekabooInstance;
     },
     register: function(element, options){
       var instance = this.instance();
-      instance.register_element(element, options);
+      instance.registerElement(element, options);
     },
     setOptions: function(element, options){
       var instance = this.instance();
@@ -117,21 +117,21 @@ this.TCT.Peekaboo = (function(TCT){
         peekabooElement.update(options);
       }
     },
-    register_element: function(element, options){
+    registerElement: function(element, options){
       if($(element).data("peekaboo_id")) return;
       var peekabooElement = new PeekabooElement(element, options);
       $(element).data("peekaboo_id", peekabooElement.uid);
       this.elements.push(peekabooElement);
     },
     measure: function(){
-      this.viewport_height = $(window).height();
-      this.document_height = $(document).height() - this.viewport_height;
+      this.viewportHeight = $(window).height();
+      this.documentHeight = $(document).height() - this.viewportHeight;
     },
     start: function(){
       if(this.running) return;
       $(window)
-        .on("scroll.peekaboo_event", this.on_scroll)
-        .on("resize.peekaboo_event", this.on_resize);
+        .on("scroll.peekaboo_event", this.onScroll)
+        .on("resize.peekaboo_event", this.onResize);
       this.running = true;
       this.run();
     },
@@ -145,31 +145,31 @@ this.TCT.Peekaboo = (function(TCT){
     },
     run: function(){
       if(!this.running) return;
-      var scroll_position = $(document).scrollTop(),
-          prev_scroll = this.scroll_position,
-          viewport_height = this.viewport_height,
-          direction = ((typeof prev_scroll == "undefined") || (prev_scroll == scroll_position)) ? "none" : scroll_position > prev_scroll ? "down" : "up";
+      var scrollPosition = $(document).scrollTop(),
+          prevScroll = this.scrollPosition,
+          viewportHeight = this.viewportHeight,
+          direction = ((typeof prevScroll == "undefined") || (prevScroll == scrollPosition)) ? "none" : scrollPosition > prevScroll ? "down" : "up";
       _(this.elements).each(function(peekabooElement){
-        peekabooElement.exec(scroll_position, viewport_height, prev_scroll, direction);
+        peekabooElement.exec(scrollPosition, viewportHeight, prevScroll, direction);
       });
-      this.scroll_position = scroll_position;
+      this.scrollPosition = scrollPosition;
       this.triggerPosition();
       
     },
     triggerPosition: function(){
-      var percent = Math.round((this.scroll_position / this.document_height)*100)/100;
+      var percent = Math.round((this.scrollPosition / this.documentHeight)*100)/100;
       $(window).trigger($.Event("peekaboo_scroll_position", {
-        position: this.scroll_position,
+        position: this.scrollPosition,
         percent: percent
       }));
     },
-    on_scroll: function(e){
+    onScroll: function(e){
       this.run();
     },
-    on_resize: function(){
+    onResize: function(){
       this.measure();
-      _(this.elements).each(function(peekaboo_element){
-        peekaboo_element.measure();
+      _(this.elements).each(function(peekabooElement){
+        peekabooElement.measure();
       });
       this.run();
     }

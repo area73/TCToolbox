@@ -51,15 +51,12 @@ module.exports = function (grunt) {
                         "bower_components/jquery/dist/jquery.js",
                         "bower_components/underscore/underscore.js",
                     ],
-                    helpers: ['test/helpers/*.js'],
+                    helpers: ['test/helpers/*.js',
+                              "bower_components/jasmine-jquery/lib/jasmine-jquery.js"],
                     page: {
                         viewportSize: {
-                            width: 2000,
-                            height: 800
-                        },
-                        paperSize:{
-                          width: 2000,
-                          height: 200  
+                            width: 800,
+                            height: 500
                         }
                     }
                 }

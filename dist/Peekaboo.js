@@ -11,24 +11,14 @@ this.TCT.Peekaboo = (function(TCT){
       Peekaboo = function(singletonEnforcer){
         if(!singletonEnforcer || !(singletonEnforcer instanceof PeekabooSingletonEnforcer))
           throw(new Error("TCT.Peekaboo is a singleton. Please use TCT.Peekaboo.instance()"));
-
+        this.running = false;
         _.bindAll(this, "on_scroll", "on_resize");
         this.elements = [];
         this.on_scroll = _.debounce(this.on_scroll, 100);
         this.on_resize = _.debounce(this.on_resize, 100);
         this.measure();
-        $(window)
-          .on("scroll", this.on_scroll)
-          .on("resize", this.on_resize);
       },
       peekaboo_instance;
-
-  //  =================================
-
-  //  =================================
-  $.extend(PeekabooElement,{
-    
-  });
 
   //  ====================================
 
@@ -105,8 +95,11 @@ this.TCT.Peekaboo = (function(TCT){
       var instance = this.instance();
       instance.setOptionsFor(element, options);
     },
-    run: function(){
-      this.instance().run();
+    start: function(){
+      this.instance().start();
+    },
+    stop: function(){
+      this.instance().stop();
     }
   });
 
@@ -125,6 +118,7 @@ this.TCT.Peekaboo = (function(TCT){
       }
     },
     register_element: function(element, options){
+      if($(element).data("peekaboo_id")) return;
       var peekabooElement = new PeekabooElement(element, options);
       $(element).data("peekaboo_id", peekabooElement.uid);
       this.elements.push(peekabooElement);
@@ -133,7 +127,24 @@ this.TCT.Peekaboo = (function(TCT){
       this.viewport_height = $(window).height();
       this.document_height = $(document).height() - this.viewport_height;
     },
+    start: function(){
+      if(this.running) return;
+      $(window)
+        .on("scroll.peekaboo_event", this.on_scroll)
+        .on("resize.peekaboo_event", this.on_resize);
+      this.running = true;
+      this.run();
+    },
+    stop: function(){
+      if(!this.running) return;
+      $(window).off(".peekaboo_event");
+      this.running = false;
+      _(this.elements).each(function(element){
+        element.visible = false;
+      });
+    },
     run: function(){
+      if(!this.running) return;
       var scroll_position = $(document).scrollTop(),
           prev_scroll = this.scroll_position,
           viewport_height = this.viewport_height,

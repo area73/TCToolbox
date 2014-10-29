@@ -47,7 +47,7 @@ describe("TCT.Peekaboo", function(){
     })
   })
 
-  // describe("when starting", function(){
+  describe("when starting", function(){
     it("should trigger events for visible elements", function(){
       spyOnEvent("[data-peekaboo-block]:nth(0)", "peekaboo_state_change")
       spyOnEvent("[data-peekaboo-block]:nth(1)", "peekaboo_state_change")
@@ -79,81 +79,79 @@ describe("TCT.Peekaboo", function(){
           .toHaveBeenTriggeredOn("[data-peekaboo-block]:nth(2)");
       TCT.Peekaboo.stop();  
     })
+  });
 
-    describe("while running", function(){
-      beforeEach(function(done){
-        _.defer(function(){
-          window.scrollTo(0, 0);
-          TCT.Peekaboo.start();
-          done();
-        }) 
+  describe("while running", function(){
+    beforeEach(function(done){
+      _.defer(function(){
+        window.scrollTo(0, 0);
+        TCT.Peekaboo.start();
+        done();
+      }) 
+    });
+
+    afterEach(function(){
+      $("[data-peekaboo-block]").off("peekaboo_state_change")
+      TCT.Peekaboo.stop(); 
+    });
+
+    it("should trigger events for visible elements when going down", function(done){
+      spyOnEvent("[data-peekaboo-block]:nth(2)", "peekaboo_state_change")
+      $("[data-peekaboo-block]:nth(2)").peekaboo().on("peekaboo_state_change", function(e){
+        expect(e.state).toBe("visible");
+        expect(e.direction).toBe("down");
+        expect(e.scroll).toBe(600);
+        done();
       });
-
-      afterEach(function(){
-        $("[data-peekaboo-block]").off("peekaboo_state_change")
-        TCT.Peekaboo.stop(); 
-      });
-
-      it("should trigger events for visible elements when going down", function(done){
-        spyOnEvent("[data-peekaboo-block]:nth(2)", "peekaboo_state_change")
-        $("[data-peekaboo-block]:nth(2)").peekaboo().on("peekaboo_state_change", function(e){
-          expect(e.state).toBe("visible");
-          expect(e.direction).toBe("down");
-          expect(e.scroll).toBe(600);
-          done();
-        });
-        _.defer(function(){
-          window.scrollTo(0, 600);
-        })
-      });
-
-      it("should trigger events for visible elements when going up", function(done){
-        _.defer(function(){
-          window.scrollTo(0, 600);
-          _.delay(function(){
-            $("[data-peekaboo-block]:nth(0)").peekaboo().on("peekaboo_state_change", function(e){
-              expect(e.state).toBe("visible");
-              expect(e.direction).toBe("up");
-              expect(e.scroll).toBe(100);
-              expect(e.prev_scroll).toBe(600);
-              done();
-            });
-            window.scrollTo(0, 100);    
-          }, 1000)
-        })
-      })
-
-      it("should trigger events for hidden elements when going down", function(done){
-        $("[data-peekaboo-block]:nth(0)").peekaboo().on("peekaboo_state_change", function(e){
-          expect(e.state).toBe("hidden");
-          expect(e.direction).toBe("down");
-          expect(e.scroll).toBe(600);
-          expect(e.prev_scroll).toBe(0);
-          done();
-        });
-        _.delay(function(){
-          window.scrollTo(0, 600);
-        }, 1000)
-      })
-
-      it("should trigger events for hidden elements when going up", function(done){
-        _.defer(function(){
-          window.scrollTo(0, 600);
-          _.delay(function(){
-            $("[data-peekaboo-block]:nth(2)").peekaboo().on("peekaboo_state_change", function(e){
-              expect(e.state).toBe("hidden");
-              expect(e.direction).toBe("up");
-              expect(e.scroll).toBe(100);
-              expect(e.prev_scroll).toBe(600);
-              done();
-            });
-            window.scrollTo(0, 100);
-          }, 1000)
-        });      
+      _.defer(function(){
+        window.scrollTo(0, 600);
       })
     });
-    
-  // })
 
+    it("should trigger events for visible elements when going up", function(done){
+      _.defer(function(){
+        window.scrollTo(0, 600);
+        _.delay(function(){
+          $("[data-peekaboo-block]:nth(0)").peekaboo().on("peekaboo_state_change", function(e){
+            expect(e.state).toBe("visible");
+            expect(e.direction).toBe("up");
+            expect(e.scroll).toBe(100);
+            expect(e.prev_scroll).toBe(600);
+            done();
+          });
+          window.scrollTo(0, 100);    
+        }, 1000)
+      })
+    })
+
+    it("should trigger events for hidden elements when going down", function(done){
+      $("[data-peekaboo-block]:nth(0)").peekaboo().on("peekaboo_state_change", function(e){
+        expect(e.state).toBe("hidden");
+        expect(e.direction).toBe("down");
+        expect(e.scroll).toBe(600);
+        expect(e.prev_scroll).toBe(0);
+        done();
+      });
+      _.delay(function(){
+        window.scrollTo(0, 600);
+      }, 1000)
+    })
+
+    it("should trigger events for hidden elements when going up", function(done){
+      _.defer(function(){
+        window.scrollTo(0, 600);
+        _.delay(function(){
+          $("[data-peekaboo-block]:nth(2)").peekaboo().on("peekaboo_state_change", function(e){
+            expect(e.state).toBe("hidden");
+            expect(e.direction).toBe("up");
+            expect(e.scroll).toBe(100);
+            expect(e.prev_scroll).toBe(600);
+            done();
+          });
+          window.scrollTo(0, 100);
+        }, 1000)
+      });      
+    })
+  });
     
 });

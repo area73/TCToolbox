@@ -1,7 +1,7 @@
 var CollapsableHelpers = {
   createTestContainer: function(){
     this.container = $("<div id='collapsable-test-html'>");
-    this.container.prependTo("body");
+    this.container.appendTo("body");
   },
   createCollapsable: function(h){
     var div = $("<div data-collapsable> "+
@@ -17,10 +17,10 @@ var CollapsableHelpers = {
     this.container.append(div)
     return div;
   },
-  createTestElement: function(h){
+  createTestElement: function(h, collapsableOptions){
     if(!h) h = 500;
     if(!$("#collapsable-test-html").length) this.createTestContainer()
-    return this.createCollapsable(h).collapsable();
+    return this.createCollapsable(h).collapsable(collapsableOptions);
   }
   
 }

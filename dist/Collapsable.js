@@ -1,5 +1,8 @@
+
+
+
 if(!this.TCT) this.TCT = {};
-this.TCT.Peekaboo = (function(TCT){
+this.TCT.Collapsable = (function(TCT){
 
   var Collapsable = function(element,options) {
     this.options = $.extend({}, this.defaults, options);
@@ -7,7 +10,8 @@ this.TCT.Peekaboo = (function(TCT){
     this.element = $(element);
     this.expanded = false;
     this.triggers = this.element.find(this.options.toggle);
-    this.element.find(this.options.content).addClass(this.options.contentClass);
+    this.content = this.element.find(this.options.content);
+    this.addElementClasses();
     this.init();
   };
 
@@ -18,14 +22,19 @@ this.TCT.Peekaboo = (function(TCT){
       content: "[data-collapsable-content]",
       expandedClass: "tct-collapsable--expanded",
       collapsedClass: "tct-collapsable--collapsed",
-      contentClass: "tct-collapsable__content"
+      contentClass: "tct-collapsable__content",
+      animated: false
     },
     init:function() {
-      this.setClasses();
+      this.setElementClasses();
       this.notify();
       this.triggers.on('click',this.onToggle);
     },
-    setClasses: function(){
+    addElementClasses: function(){
+      this.content
+            .addClass(this.options.contentClass);
+    },
+    setElementClasses: function(){
       var removed, added;
       if(this.expanded){
         removed = this.options.collapsedClass;
@@ -41,14 +50,16 @@ this.TCT.Peekaboo = (function(TCT){
       this.element.trigger($.Event(this.expanded ? 'expanded' : 'collapsed'));
     },
     collapse: function(){
+      if(!this.expanded) return;
       this.changeState(false);
     },
     expand: function() {
+      if(this.expanded) return;
       this.changeState(true);
     },
     changeState: function(state){
       this.expanded = state;
-      this.setClasses();
+      this.setElementClasses();
       this.notify();
     },
     onToggle:function(e){
@@ -60,16 +71,71 @@ this.TCT.Peekaboo = (function(TCT){
       }
     }
   });
-
-  $.fn.collapsable = function(options){
-    return $(this).each(function(){
-      var self = $(this);
-      if(!self.data("collapsable")){
-        self.data("collapsable", new Collapsable(this, options));
-      }
-    });
-
-  };
-
   return Collapsable;
 })();
+this.TCT.CollapsableAnimated = (function(sup){
+  var CollapsableAnimated = function(element, options){
+    this.defaults = $.extend({}, sup.prototype.defaults, this.defaults);
+    sup.call(this, element, options);
+  };
+
+  var tmp = function(){};
+  tmp.prototype = sup.prototype;
+  CollapsableAnimated.prototype = new tmp();
+  CollapsableAnimated.prototype.constructor = CollapsableAnimated;
+
+  $.extend(CollapsableAnimated.prototype, {
+    defaults: {
+      animatedClass: "tct-collapsable__content--animated",
+      noTransitionClass: "tct-collapsable__content--no-transition"
+    },
+    addElementClasses: function(){
+      this.element.find(this.options.content)
+            .addClass(this.options.animatedClass);
+      sup.prototype.addElementClasses.call(this);
+    },
+    expand: function(){
+      this.calcContentHeight();
+      sup.prototype.expand.call(this);
+    },
+    collapse: function(){
+      this.content.css("height", "");
+      sup.prototype.collapse.call(this);
+    },
+    calcContentHeight: function(transition){
+      var element = this.content,
+          current_height = element.outerHeight(),
+          noTransitionClass = this.options.noTransitionClass,
+          real_height;
+      element.addClass(noTransitionClass).css("height","auto");
+      real_height = element.outerHeight();
+      if(transition === false){
+        element
+            .css("height",real_height);
+        _.defer(function(){
+          element.removeClass(noTransitionClass);
+        });
+      }else{
+        element
+          .css("height",current_height)
+            .removeClass("hidden").addClass("visible");
+        _.defer(function(){
+          element
+            .removeClass(noTransitionClass)
+            .css("height", real_height);
+        });
+      }
+    }
+  });
+
+  return CollapsableAnimated;
+})(TCT.Collapsable);
+$.fn.collapsable = function(options){
+  var collapsableClass = (options && options.animated) ? TCT.CollapsableAnimated : TCT.Collapsable;
+  return $(this).each(function(){
+    var self = $(this);
+    if(!self.data("collapsable")){
+      self.data("collapsable", new collapsableClass(this, options));
+    }
+  });
+};

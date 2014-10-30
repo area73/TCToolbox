@@ -1,0 +1,9 @@
+.tct-collapsable{
+  &--collapsed &__content{
+    height: 0;
+    overflow: hidden;
+  }
+  &--expanded &__content{
+    height: auto;
+  }
+}

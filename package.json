@@ -1,0 +1,8 @@
+{
+  "name": "Collapsable",
+  "description": "Dropdown animations plugin",
+  "keywords": "dropdown collapse expand js",
+  "repository": "git@github.com:the-cocktail/TCToolbox.git#Collapsable",
+  "dependencies": {},
+  "devDependencies":{}
+}

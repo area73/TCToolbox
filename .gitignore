@@ -1,6 +1,5 @@
 node_modules/
 
-/bower.json
 src/
 tests/
 examples/
@@ -9,3 +8,8 @@ dist/
 
 .ruby-version
 .ruby-gemset
+
+public/
+_SpecRunner.html
+.grunt
+bower_components/

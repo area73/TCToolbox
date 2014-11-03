@@ -1,0 +1,6 @@
+{
+  "name": "tct-jsdoc-theme",
+  "dependencies": {
+    "tct-foundation": "git@github.com:the-cocktail/TCToolbox.git#tct-foundation"
+  }
+}

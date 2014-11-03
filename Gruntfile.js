@@ -17,10 +17,20 @@ module.exports = function(grunt){
         dest: "TCETheme/static/styles",
         ext: ".css"
       }
+    },
+    watch: {
+      options:{
+        spawn: false
+      },
+      theme: {
+        files: ["TCETheme/**/*"],
+        tasks: ["sass", "jsdoc"]
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-sass');
-  grunt.registerTask('default', ["sass", 'jsdoc']);
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.registerTask('default', ["sass", 'jsdoc', "watch"]);
 }

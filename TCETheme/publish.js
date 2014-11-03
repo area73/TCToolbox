@@ -14,6 +14,19 @@ var template = require('jsdoc/template'),
     view,
     outdir = env.opts.destination;
 
+var walkSync = function(dir, filelist) {
+  var files = fs.readdirSync(dir);
+  filelist = filelist || [];
+  files.forEach(function(file) {
+    if (fs.statSync(dir + file).isDirectory()) {
+      filelist = walkSync(dir + file + '/', filelist);
+    }
+    else {
+      filelist.push(dir + file);
+    }
+  });
+  return filelist;
+};
 
 function find(spec) {
     return helper.find(data, spec);
@@ -387,11 +400,11 @@ exports.publish = function(taffyData, opts, tutorials) {
     fs.mkPath(outdir);
 
     // copy the template's static files to outdir
-    var fromDir = path.join(templatePath, 'static');
-    var staticFiles = fs.ls(fromDir, 3);
-
+    var fromDir = path.join(templatePath, 'static/');
+    var staticFiles = walkSync(fromDir) //fs.ls(fromDir, 3);
     staticFiles.forEach(function(fileName) {
-        var toDir = fs.toDir( fileName.replace(fromDir, outdir) );
+        var toDir = fs.toDir( fileName.replace(fromDir, outdir+"/") );
+        // throw(outdir)
         fs.mkPath(toDir);
         fs.copyFileSync(fileName, toDir);
     });
@@ -401,6 +414,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var staticFileFilter;
     var staticFileScanner;
     if (conf['default'].staticFiles) {
+
         staticFilePaths = conf['default'].staticFiles.paths || [];
         staticFileFilter = new (require('jsdoc/src/filter')).Filter(conf['default'].staticFiles);
         staticFileScanner = new (require('jsdoc/src/scanner')).Scanner();

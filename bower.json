@@ -1,6 +1,10 @@
 {
-  "name": "foundation-libsass-template",
+  "name": "tct-foundation",
   "dependencies": {
     "foundation": "zurb/bower-foundation"
-  }
+  },
+  "main": [
+    "js/app.js",
+    "css/app.css"
+  ]
 }

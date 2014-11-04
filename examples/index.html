@@ -23,8 +23,19 @@
         <nav>
           <ul class="side-nav">
             <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#code_example">Code Example</a></li>
+            <li><a href="#block-grid-links">Links grid</a></li>
             <li><a href="#block-grid">Block grid</a></li>
             <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+            <li><a href="#headers">Headers</a></li>
+            <li><a href="#definition_lists">Definition Lists</a></li>
+            <li><a href="#lists">Lists</a></li>
+            <li><a href="#blockquote">Blockquotes</a></li>
+            <li><a href="#pagination">Pagination</a></li>
+            <li><a href="#panels">Panels</a></li>
+            <li><a href="#labels">Labels</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#tabs">Tabs</a></li>
           </ul>
         </nav>
       </aside>
@@ -62,7 +73,80 @@
 
         <hr />
 
-        <section id="block-grid">
+        <section id="code_example">
+          <h1>Code example</h1>
+          <pre class="prettyprint">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt; 
+&lt;html&gt; 
+  &lt;head&gt; 
+  &lt;title&gt;My first styled page&lt;/title&gt; 
+  &lt;style&gt; 
+    .wrapper{ 
+      margin: 0px auto; 
+      max-with: 960px; 
+    } 
+  &lt;/style&gt; 
+  &lt;/head&gt; 
+  &lt;body&gt; 
+    &lt;!-- Site navigation menu --&gt; 
+    &lt;ul class="navbar"&gt; 
+      &lt;li&gt;&lt;a href="index.html"&gt;Home page&lt;/a&gt; 
+      &lt;li&gt;&lt;a href="musings.html"&gt;Musings&lt;/a&gt; 
+    &lt;/ul&gt; 
+
+    &lt;!-- Main content --&gt; 
+    &lt;h1&gt;My first styled page&lt;/h1&gt; 
+
+    &lt;p&gt;Welcome to my styled page!&lt;/p&gt; 
+
+    &lt;p&gt;There should be more here, but I don't know 
+    what yet.&lt;/p&gt; 
+
+    &lt;!-- Sign and date the page, it's only polite! --&gt; 
+    &lt;address&gt;Made 5 April 2004&lt;br&gt;
+      by myself.&lt;/address&gt; 
+
+    &lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt; 
+  &lt;/body&gt; 
+&lt;/html&gt;</pre>
+
+        <pre class="prettyprint linenums">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"&gt; 
+&lt;html&gt; 
+  &lt;head&gt; 
+  &lt;title&gt;My first styled page&lt;/title&gt; 
+  &lt;style&gt; 
+    .wrapper{ 
+      margin: 0px auto; 
+      max-with: 960px; 
+    } 
+  &lt;/style&gt; 
+  &lt;/head&gt; 
+  &lt;body&gt; 
+    &lt;!-- Site navigation menu --&gt; 
+    &lt;ul class="navbar"&gt; 
+      &lt;li&gt;&lt;a href="index.html"&gt;Home page&lt;/a&gt; 
+      &lt;li&gt;&lt;a href="musings.html"&gt;Musings&lt;/a&gt; 
+    &lt;/ul&gt; 
+
+    &lt;!-- Main content --&gt; 
+    &lt;h1&gt;My first styled page&lt;/h1&gt; 
+
+    &lt;p&gt;Welcome to my styled page!&lt;/p&gt; 
+
+    &lt;p&gt;There should be more here, but I don't know 
+    what yet.&lt;/p&gt; 
+
+    &lt;!-- Sign and date the page, it's only polite! --&gt; 
+    &lt;address&gt;Made 5 April 2004&lt;br&gt;
+      by myself.&lt;/address&gt; 
+
+    &lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt; 
+  &lt;/body&gt; 
+&lt;/html&gt;</pre>
+        </section>
+
+        <hr />
+
+        <section id="block-grid-links">
           <h1>Links grid</h1>
           <ul class="large-block-grid-3 grid-without-paddings grid-image-links">
             <li>
@@ -176,8 +260,8 @@
 
         <hr />
 
-        <section id="definitionlist">
-          <h1>Definition List</h1>
+        <section id="definition_lists">
+          <h1>Definition Lists</h1>
           <dl>
             <dt>Lower cost</dt>
             <dd>The new version of this product costs significantly less than the previous one!</dd>
@@ -314,6 +398,7 @@
 
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script> 
     <script type="text/javascript" src="../bower_components/foundation/js/foundation.js"></script> 
+    <script type="text/javascript" src="../bower_components/prettify/bin/run_prettify.min.js"></script> 
     <script type="text/javascript" src="../dist/tct-foundation.js"></script> 
 
   </body>

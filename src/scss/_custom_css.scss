@@ -1,3 +1,4 @@
+// Scrollbars
 ::scrollbar {
     width: 10px
 }
@@ -30,10 +31,12 @@
     background-color: #aaa
 }
 
+// Grids
 [class*="grid-without-paddings"] > li{
 	padding: 0px !important;
 }
 
+// Grid Image Links
 [class*="grid-image-links"] > li{
 	a{
 		display: block;

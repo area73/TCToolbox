@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           outputStyle: 'compressed'
         },
         files: {
-          'css/app.css': 'scss/app.scss'
+          'dist/tct-foundation.css': 'src/scss/tct-foundation.scss'
         }        
       }
     },
@@ -20,15 +20,29 @@ module.exports = function(grunt) {
       grunt: { files: ['Gruntfile.js'] },
 
       sass: {
-        files: 'scss/**/*.scss',
+        files: 'src/scss/**/*.scss',
         tasks: ['sass']
+      },
+
+      js:{
+        files: "src/js/**/*.js",
+        tasks: ["directives"]
+      }
+    },
+
+    directives: {
+      files: {
+        src     : 'src/js/tct-foundation.js',
+        dest    : 'dist/tct-foundation.js'
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sprockets-directives');
 
-  grunt.registerTask('build', ['sass']);
+  grunt.registerTask('build', ['sass', "directives"]);
   grunt.registerTask('default', ['build','watch']);
+
 }

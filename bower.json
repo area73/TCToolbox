@@ -4,7 +4,7 @@
     "foundation": "zurb/bower-foundation"
   },
   "main": [
-    "js/app.js",
-    "css/app.css"
+    "dist/tct-foundation.js",
+    "dist/tct-foundation.css"
   ]
 }

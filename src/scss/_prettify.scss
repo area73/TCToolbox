@@ -5,8 +5,13 @@ pre + pre{
 	margin-top: 20px;
 }
 
+pre.prettyprint{
+  padding: 0px !important;
+}
+
 code{
   display: block;
+  border-width: 0px;
 }
 
 .prettyprint {

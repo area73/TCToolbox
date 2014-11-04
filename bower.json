@@ -13,6 +13,7 @@
     "underscore": "~1.7.0"
   },
   "devDependencies": {
-    "jasmine-jquery": "~2.0.5"
+    "jasmine-jquery": "~2.0.5",
+    "tct-foundation": "the-cocktail/TCToolbox#tct-foundation"
   }
 }

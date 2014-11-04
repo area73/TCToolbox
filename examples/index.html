@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Peekaboo</title>
+    <link rel="stylesheet" href="../bower_components/tct-foundation/dist/tct-foundation.css">
+    <script type="text/javascript" src="../bower_components/modernizr/modernizr.js"></script>
+  </head>
+  <body>
+    
+    <article class="row">
+      <header class="large-12 columns">
+        <h1>Peekaboo</h1>
+      </header>
+      <aside class="medium-3 columns">
+        <nav>
+          <ul class="side-nav">
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="medium-9 columns">
+        
+        <p>Check if DOM elements are currently visible in the viewport. Useful for playing videos or animations only when the user is truly looking at them.</p>
+        <hr>
+
+        <section id="instalation">
+          <h2>Installation</h2>
+          <ol>
+            <li>
+              <p>Download from <a href="https://github.com/the-cocktail/TCToolbox/archive/Peekaboo.zip">github</a> or install via bower with <code>bower install the-cocktail/TCToolbox#tct-foundation --save</code>
+              </p>
+            </li>
+            <li>
+              <p>Include Peekaboo and it's dependencies in your site:</p>
+              <pre class="prettyprint"><code>...
+    &lt;script src="jquery.js"&gt;&lt;/script&gt;
+    &lt;script src="underscore.js"&gt;&lt;/script&gt;
+    &lt;script src="Peekaboo.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code><pre>
+            </li>
+          </ol>   
+        </section>
+        <hr>
+        <section id="usage">
+          <h2>Basic usage</h2>
+          <dl class="tabs" data-tab="">
+            <dd class="active"><a href="#usage-html">HTML</a></dd>
+            <dd><a href="#usage-js">JS</a></dd>
+          </dl>
+          <div class="tabs-content">
+            <div class="content active" id="usage-html">
+              <pre class="prettyprint"><code>...
+&lt;div id='chart'&gt;
+  &lt;!-- Content --&gt;
+&lt;/div&gt;
+...</code></pre>
+            </div>
+            <div class="content" id="usage-js">
+              <pre class="prettyprint"><code>Peekaboo.instance() // Retrieve the Peekaboo instance
+  .register("#chart") // Register the #chart element
+
+// Subscribe to Peekaboo.STATE_CHANGE_EVENT
+$("#chart").on(Peekaboo.STATE_CHANGE_EVENT, function(e){
+  // Respond to state change
+})
+
+Peekaboo.start() // Initialize Peekaboo instance
+</code></pre>
+            </div>
+          </div>
+        </section>
+        <hr>
+        <section>
+          <h2>API</h2>
+          <ul>
+            <li>
+              <h3 class="subheader">Peekaboo.instance().register(element, options)</h3>
+              <p>Register element into Peekaboo.</p>
+              <p>Registered elements will fire a Peekaboo.STATE_CHANGE_EVENT ("peekaboo_state_change") whenever they become visible or hidden.</p>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Argument</td>
+                    <td>Type</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>element</td>
+                    <td>Selector, HTMLElement or jQuery object</td>
+                  </tr>
+                  <tr>
+                    <td>options</td>
+                    <td>Configuration options.</td>
+                  </tr>
+                </tbody>
+              </table>              
+              <h4>Example</h4>
+              <pre class="prettyprint"><code>Peekaboo.instance().register("#element",{
+  offsetTop: 100
+})</code></pre>
+              <h4>Options</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>offsetTop</th>
+                    <td>Number</td>
+                    <td>0</td>
+                    <td>Distance from the beginning of the element. Can be negative.</td>
+                  </tr>
+                  <tr>
+                    <th>offsetTop</th>
+                    <td>Number</td>
+                    <td>0</td>
+                    <td>Distance from the end of the element. Can be negative.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <h3 class="subheader">Peekaboo.instance.start()</h3>
+              <p>Start listening for scroll and resizing events.</p>
+              <p>Once started, the registered HTML elements will start firing events of type Peekaboo.STATE_CHANGE_EVENT. </p>
+            </li>
+            <li>
+              <h3 class="subheader">Peekaboo.instance.stop()</h3>
+              <p>Stop listening for scroll and resizing events.</p>
+              <p>After calling this method, the registered HTML elements will stop firing events of type Peekaboo.STATE_CHANGE_EVENT.</p>
+              <p>Stopping Peekaboo, doesn't unregister the elements.</p>
+            </li>
+          </ul>
+        </section>
+        <hr>
+        <section>
+          <h2>Events</h2>
+        </section>
+      </section>
+    </article>    
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script> 
+    <script type="text/javascript" src="../bower_components/foundation/js/foundation.js"></script> 
+    <script type="text/javascript" src="../bower_components/tct-foundation/dist/tct-foundation.js"></script> 
+  </body>
+</html>

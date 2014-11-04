@@ -56,7 +56,7 @@ this.TCT.Peekaboo = (function(TCT){
       visible = state == "visible";
       if(this.visible != visible){
         this.visible = visible;
-        $(this.element).trigger( $.Event("peekaboo_state_change", {
+        $(this.element).trigger( $.Event(Peekaboo.STATE_CHANGE_EVENT, {
           state: state,
           scroll: scrollPosition,
           prevScroll: prevScroll,
@@ -82,6 +82,8 @@ this.TCT.Peekaboo = (function(TCT){
 
   //  ==========================
   $.extend(Peekaboo,{
+    STATE_CHANGE_EVENT: "peekaboo_state_change",
+
     instance: function(){
       if(!peekabooInstance)
         peekabooInstance = new Peekaboo(new PeekabooSingletonEnforcer());

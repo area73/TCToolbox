@@ -31,6 +31,16 @@ describe("TCT.Peekaboo", function(){
         expect(_(instance.elements).where({uid: uid}))
           .toBeDefined();
       })
+      it("should accept a selector", function(){
+        expect(function(){
+          TCT.Peekaboo.register("[data-peekaboo-block]:nth(2)")
+        }).not.toThrow();
+      })
+      it("should accept an HTMLElement", function(){
+        expect(function(){
+          TCT.Peekaboo.register($("[data-peekaboo-block]:nth(2)")[0])
+        }).not.toThrow();
+      })
     })
 
     describe("measure", function(){

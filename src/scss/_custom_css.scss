@@ -31,8 +31,19 @@
   background-color: #aaa
 }
 
-// Header
+//tabs
+.tabs dd,
+.tabs .tab-title{
+	border: 1px solid #efefef;
+	border-bottom: 0px;
+}
 
+.tabs-content > .content{
+	padding: 20px;
+	border: 1px solid #efefef;
+}
+
+// Header
 .top-bar .name h1 a{
 	font-size: 19px;
 

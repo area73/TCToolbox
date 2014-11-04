@@ -1,0 +1,47 @@
+[class*="grid-without-paddings"] > li{
+	padding: 0px !important;
+}
+
+[class*="grid-image-links"] > li{
+	a{
+		display: block;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.block-img-title,
+	.block-img-description{
+		position: absolute;
+	}
+
+	.block-img-description{
+		display: none;
+	}
+
+	.block-img-title{
+		display: block;
+		background: $primary-color;
+		color: $white;
+		text-align: center;
+		padding: 10px 5px;
+		left: 20px;
+		right: 20px;
+		top: 80px;
+		opacity: 1;
+
+-webkit-transition: all 100ms ease-in-out; 
+   -moz-transition: all 100ms ease-in-out; 
+    -ms-transition: all 100ms ease-in-out; 
+     -o-transition: all 100ms ease-in-out; 
+        transition: all 100ms ease-in-out;		
+	}
+
+	a:hover{
+		.block-img-title{
+			top: 0px;
+			left: 0px;
+			right: 0px;
+			padding: 5px 5px;
+		}
+	}
+}

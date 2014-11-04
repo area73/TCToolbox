@@ -4,6 +4,11 @@
 pre + pre{
 	margin-top: 20px;
 }
+
+code{
+  display: block;
+}
+
 .prettyprint {
   background: white;
   font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;

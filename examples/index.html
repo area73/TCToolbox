@@ -73,77 +73,148 @@ Peekaboo.start() // Initialize Peekaboo instance
           </div>
         </section>
         <hr>
-        <section>
+
+        <section id="api">
           <h2>API</h2>
           <ul>
             <li>
               <h3 class="subheader">Peekaboo.instance().register(element, options)</h3>
-              <p>Register element into Peekaboo.</p>
-              <p>Registered elements will fire a Peekaboo.STATE_CHANGE_EVENT ("peekaboo_state_change") whenever they become visible or hidden.</p>
-              <table>
-                <thead>
-                  <tr>
-                    <td>Argument</td>
-                    <td>Type</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>element</td>
-                    <td>Selector, HTMLElement or jQuery object</td>
-                  </tr>
-                  <tr>
-                    <td>options</td>
-                    <td>Configuration options.</td>
-                  </tr>
-                </tbody>
-              </table>              
-              <h4>Example</h4>
-              <pre class="prettyprint"><code>Peekaboo.instance().register("#element",{
+              <dl class="tabs" data-tab="">
+                <dd class="active"><a href="#api-register-overview">Overview</a></dd>
+                <dd><a href="#api-register-example">Example</a></dd>
+                <dd><a href="#api-register-options">Options</a></dd>
+              </dl>
+              <div class="tabs-content">
+                <div class="content active" id="api-register-overview">
+                  <p>Register element into Peekaboo.</p>
+                  <p>Registered elements will fire events of typePeekaboo.STATE_CHANGE_EVENT ("peekaboo_state_change") whenever they become visible or hidden.</p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <td>Argument</td>
+                        <td>Type</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>element</td>
+                        <td>Selector, HTMLElement or jQuery object</td>
+                      </tr>
+                      <tr>
+                        <td>options</td>
+                        <td>Configuration options.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="content" id="api-register-example">
+                  <pre class="prettyprint"><code>Peekaboo.instance().register("#element",{
   offsetTop: 100
 })</code></pre>
-              <h4>Options</h4>
+                </div>
+                <div class="content" id="api-register-options">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>offsetTop</th>
+                        <td>Number</td>
+                        <td>0</td>
+                        <td>Distance from the beginning of the element. Can be negative.</td>
+                      </tr>
+                      <tr>
+                        <th>offsetBottom</th>
+                        <td>Number</td>
+                        <td>0</td>
+                        <td>Distance from the end of the element. Can be negative.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </li>
+            <li>
+              <h3 class="subheader">Peekaboo.instance().start()</h3>
+              <dl class="tabs" data-tab="">
+                <dd class="active"><a href="#api-start-overview">Overview</a></dd>
+                <dd><a href="#api-start-example">Example</a></dd>
+              </dl>
+              <div class="tabs-content">
+                <div class="content active" id="api-start-overview">
+                  <p>Start listening for scroll and resizing events.</p>
+                  <p>Once started, the registered HTML elements will start firing events of type Peekaboo.STATE_CHANGE_EVENT. </p>
+                </div>
+                <div class="content" id="api-start-example">
+                  <pre class="prettyprint"><code>Peekaboo.instance().start()</code></pre>
+                </div>
+              </div>
+            </li>
+            <li>
+              <h3 class="subheader">Peekaboo.instance().stop()</h3>
+              <dl class="tabs" data-tab="">
+                <dd class="active"><a href="#api-stop-overview">Overview</a></dd>
+                <dd><a href="#api-stop-example">Example</a></dd>
+              </dl>
+              <div class="tabs-content">
+                <div class="content active" id="api-stop-overview">
+                  <p>Stop listening for scroll and resizing events.</p>
+                  <p>After calling this method, the registered HTML elements will stop firing events of type Peekaboo.STATE_CHANGE_EVENT.</p>
+                  <p>Stopping Peekaboo, doesn't unregister the elements.</p>
+                </div>
+                <div class="content" id="api-stop-example">
+                  <pre class="prettyprint"><code>Peekaboo.instance().stop()</code></pre>
+                </div>
+              </div>              
+            </li>
+          </ul>
+        </section>
+        <hr>
+        <section id="events">
+          <h2>Events</h2>
+          <ul>
+            <li>
+              <h3 class="subheader">Peekaboo.STATE_CHANGE_EVENT <small>("peekaboo_state_change")</small></h3>
+              <p>Event fired whenever an element change from visible to hidden and viceversa.</p>
               <table>
                 <thead>
                   <tr>
                     <th>Parameter</th>
                     <th>Type</th>
-                    <th>Default</th>
                     <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th>offsetTop</th>
-                    <td>Number</td>
-                    <td>0</td>
-                    <td>Distance from the beginning of the element. Can be negative.</td>
+                    <th>state</th>
+                    <td>String</td>
+                    <td>Current state of the HTML element. Either "visibe" or "hidden"</td>
                   </tr>
                   <tr>
-                    <th>offsetTop</th>
+                    <th>scroll</th>
                     <td>Number</td>
-                    <td>0</td>
-                    <td>Distance from the end of the element. Can be negative.</td>
+                    <td>Current scroll position</td>
+                  </tr>
+                  <tr>
+                    <th>prevScroll</th>
+                    <td>Number</td>
+                    <td>Previous scroll position</td>
+                  </tr>
+                  <tr>
+                    <th>direction</th>
+                    <td>String</td>
+                    <td>Wheter the scroll direction is "up" or "down"</td>
                   </tr>
                 </tbody>
               </table>
             </li>
-            <li>
-              <h3 class="subheader">Peekaboo.instance.start()</h3>
-              <p>Start listening for scroll and resizing events.</p>
-              <p>Once started, the registered HTML elements will start firing events of type Peekaboo.STATE_CHANGE_EVENT. </p>
-            </li>
-            <li>
-              <h3 class="subheader">Peekaboo.instance.stop()</h3>
-              <p>Stop listening for scroll and resizing events.</p>
-              <p>After calling this method, the registered HTML elements will stop firing events of type Peekaboo.STATE_CHANGE_EVENT.</p>
-              <p>Stopping Peekaboo, doesn't unregister the elements.</p>
-            </li>
           </ul>
-        </section>
-        <hr>
-        <section>
-          <h2>Events</h2>
         </section>
       </section>
     </article>    

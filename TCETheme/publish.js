@@ -216,7 +216,7 @@ function buildNav(members) {
         globalNav = '';
 
     if (members.modules.length) {
-        nav += '<h3>Modules</h3><ul>';
+        nav += '<li class="heading">Modules</li>';
         members.modules.forEach(function(m) {
             if ( !hasOwnProp.call(seen, m.longname) ) {
                 nav += '<li>'+linkto(m.longname, m.name)+'</li>';
@@ -224,11 +224,11 @@ function buildNav(members) {
             seen[m.longname] = true;
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
     
     if (members.externals.length) {
-        nav += '<h3>Externals</h3><ul>';
+        nav += '<li class="heading">Externals</li>';
         members.externals.forEach(function(e) {
             if ( !hasOwnProp.call(seen, e.longname) ) {
                 nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
@@ -236,7 +236,7 @@ function buildNav(members) {
             seen[e.longname] = true;
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
 
     if (members.classes.length) {
@@ -248,14 +248,14 @@ function buildNav(members) {
         });
         
         if (classNav !== '') {
-            nav += '<h3>Classes</h3><ul>';
+            nav += '<li class="heading">Classes</li>';
             nav += classNav;
-            nav += '</ul>';
+            nav += '<li class="divider"></li>';
         }
     }
 
     if (members.events.length) {
-        nav += '<h3>Events</h3><ul>';
+        nav += '<li class="heading">Events</li>';
         members.events.forEach(function(e) {
             if ( !hasOwnProp.call(seen, e.longname) ) {
                 nav += '<li>'+linkto(e.longname, e.name)+'</li>';
@@ -263,11 +263,11 @@ function buildNav(members) {
             seen[e.longname] = true;
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
     
     if (members.namespaces.length) {
-        nav += '<h3>Namespaces</h3><ul>';
+        nav += '<li class="heading">Namespaces</li>';
         members.namespaces.forEach(function(n) {
             if ( !hasOwnProp.call(seen, n.longname) ) {
                 nav += '<li>'+linkto(n.longname, n.name)+'</li>';
@@ -275,11 +275,11 @@ function buildNav(members) {
             seen[n.longname] = true;
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
     
     if (members.mixins.length) {
-        nav += '<h3>Mixins</h3><ul>';
+        nav += '<li class="heading">Mixins</li>';
         members.mixins.forEach(function(m) {
             if ( !hasOwnProp.call(seen, m.longname) ) {
                 nav += '<li>'+linkto(m.longname, m.name)+'</li>';
@@ -287,16 +287,16 @@ function buildNav(members) {
             seen[m.longname] = true;
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
 
     if (members.tutorials.length) {
-        nav += '<h3>Tutorials</h3><ul>';
+        nav += '<li class="heading">Tutorials</li>';
         members.tutorials.forEach(function(t) {
             nav += '<li>'+tutoriallink(t.name)+'</li>';
         });
         
-        nav += '</ul>';
+        nav += '<li class="divider"></li>';
     }
     
     if (members.globals.length) {
@@ -309,10 +309,10 @@ function buildNav(members) {
         
         if (!globalNav) {
             // turn the heading into a link so you can actually get to the global page
-            nav += '<h3>' + linkto('global', 'Global') + '</h3>';
+            nav += '<li class="heading">' + linkto('global', 'Global') + '</li>';
         }
         else {
-            nav += '<h3>Global</h3><ul>' + globalNav + '</ul>';
+            nav += '<li class="heading">Global</li>' + globalNav + '</ul>';
         }
     }
 
@@ -401,7 +401,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     // copy the template's static files to outdir
     var fromDir = path.join(templatePath, 'static/');
-    var staticFiles = walkSync(fromDir) //fs.ls(fromDir, 3);
+    var staticFiles = walkSync(fromDir); //fs.ls(fromDir, 3);
     staticFiles.forEach(function(fileName) {
         var toDir = fs.toDir( fileName.replace(fromDir, outdir+"/") );
         // throw(outdir)

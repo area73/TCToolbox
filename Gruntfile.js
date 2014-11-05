@@ -30,6 +30,15 @@ module.exports = function(grunt){
           "peekaboo"
         ]
       }
+    },
+    watch: {
+      options:{
+        spawn: false
+      },
+      assemble:{
+        files: ["src/pages/**/*", "src/layouts/**/*"],
+        tasks: ["assemble"]  
+      }
     }
   });
 
@@ -37,8 +46,8 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-bower');
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('assemble');
 
-  // grunt.registerTask("examples", ["install_examples"])
-  grunt.registerTask("default", ["examples"])
+  grunt.registerTask("default", ["examples", "assemble", "watch"])
 }

@@ -36,6 +36,24 @@
 .tabs .tab-title{
 	border: 1px solid #efefef;
 	border-bottom: 0px;
+	margin-right: 3px;
+
+	a{
+		color: #666;
+	}
+}
+
+.tabs dd.active,
+.tabs .tab-title{
+	border-bottom: 1px solid $white;
+
+	a{
+		color: $black;
+	}
+}
+
+.tabs-content{
+	margin-top: -1px;
 }
 
 .tabs-content > .content{

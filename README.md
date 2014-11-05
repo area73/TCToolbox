@@ -2,6 +2,8 @@
 
 The Cocktail Experience front tools
 
+## Installing
+
 ## Authoring
 
 - Install yeoman with **[npm install -g yo](http://yeoman.io/)**.

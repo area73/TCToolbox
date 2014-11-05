@@ -1,8 +1,5 @@
 node_modules/
 
-src/
-tests/
-examples/
 .sass-cache/
 dist/
 

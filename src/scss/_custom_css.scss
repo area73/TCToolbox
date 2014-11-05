@@ -131,3 +131,48 @@
 		}
 	}
 }
+
+// Footer
+#footer{
+	background: $primary-color;
+	padding: 50px 0px 80px 0px;
+
+	.logo_tce{
+		margin: 0px auto 0px auto;
+	  width: 100px;
+	  height: 80px;
+	  background: $white;
+	  text-indent: -999px;
+	  overflow: hidden;
+
+	  -moz-border-radius: 50px / 40px;
+	  -webkit-border-radius: 50px / 40px;
+	  border-radius: 50px / 40px;
+
+		-moz-transform: rotate(-45deg);
+		-webkit-transform: rotate(-45deg);
+	  transform: rotate(-45deg);
+	  position: relative;
+
+	  &:after,
+	  &:before{
+	  	background: $primary-color;
+	  	display: block;
+	  	content: "";
+	  	width: 3px;
+	  	height: 20px;
+	  	position: absolute;
+	  	top: 33px;
+	  	left: 20px;
+		  -moz-border-radius: 3px;
+		  -webkit-border-radius: 3px;
+		  border-radius: 3px;
+	  }
+
+	  &:before{
+			-moz-transform: rotate(-90deg);
+			-webkit-transform: rotate(-90deg);
+		  transform: rotate(-90deg);
+	  }
+	}
+}

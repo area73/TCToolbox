@@ -4,11 +4,17 @@ The Cocktail Experience front tools
 
 ## Installing
 
-## Authoring
+- Install **[bower](http://bower.io/)**
+- Install **grunt-cli** with **npm install -g grunt-cli**
+- Execute **bower install**
+- Execute **grunt**
 
-- Install yeoman with **[npm install -g yo](http://yeoman.io/)**.
-- Install generator-js-module with **[npm install -g humanrender/generator-js-module](https://github.com/humanrender/generator-js-module)**.
-- Create a new branch named after your new tool.
-- Start the environment with **yo js-module:init**.
-- Create you tool's files with **yo js-module**.
-- Commit your tools.
+## Updating packages
+
+- Execute **bower update PACKAGE_NAME**
+- Execute **grunt**
+
+## Updating the theme
+
+- Execute **bower update tct-foundation**
+- Execute **grunt**

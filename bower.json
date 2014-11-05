@@ -1,12 +1,7 @@
 {
   "name": "tctoolbox",
-  "dependencies":{
-    "peekaboo":"git@github.com:the-cocktail/TCToolbox.git#Peekaboo"
-  },
-  "exportsOverride":{
-    "peekaboo":{
-      "../../dist": ["dist/Peekaboo.css", "dist/Peekaboo.js"],
-      "../../peekaboo": "examples/**/*.*"
-    }
+  "dependencies": {
+    "tct-foundation": "git@github.com:the-cocktail/TCToolbox.git#tct-foundation",
+    "peekaboo": "git@github.com:the-cocktail/TCToolbox.git#Peekaboo"
   }
 }

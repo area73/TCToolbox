@@ -13,7 +13,7 @@ TCE.Loader =function(){
 * @memberof TCE.Loader
 * @fires Loader#loaded
 */
-TCE.Loader.prototype.load = function(){
+TCE.Loader.prototype.load = function(url){
 
 }
 

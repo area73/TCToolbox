@@ -2,8 +2,9 @@
 * Remote resource loader
 * @class View
 * @memberof TCE
+* @author Jane Smith
 */
-TCE.Loader =function(){
+TCE.View =function(){
 
 }
 

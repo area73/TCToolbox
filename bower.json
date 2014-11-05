@@ -1,7 +1,8 @@
 {
   "name": "tct-foundation",
   "dependencies": {
-    "foundation": "zurb/bower-foundation"
+    "foundation": "zurb/bower-foundation",
+    "prettify": "tcollard/google-code-prettify"
   },
   "main": [
     "dist/tct-foundation.js",

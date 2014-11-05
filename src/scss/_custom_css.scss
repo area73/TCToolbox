@@ -1,39 +1,82 @@
+// Scrollbars
 ::scrollbar {
-    width: 10px
+  width: 10px
 }
 
 ::scrollbar-track {
-    background-color: #e6e6e6
+  background-color: #e6e6e6
 }
 
 ::scrollbar-thumb {
-    background-color: #ccc
+  background-color: #ccc
 }
 
 ::scrollbar-thumb:hover {
-    background-color: #aaa
+  background-color: #aaa
 }
 
 ::-webkit-scrollbar {
-    width: 10px
+  width: 10px
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #e6e6e6
+  background-color: #e6e6e6
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ccc
+  background-color: #ccc
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa
+  background-color: #aaa
 }
 
+//tabs
+.tabs dd,
+.tabs .tab-title{
+	border: 1px solid #efefef;
+	border-bottom: 0px;
+	margin-right: 3px;
+
+	a{
+		color: #666;
+	}
+}
+
+.tabs dd.active,
+.tabs .tab-title{
+	border-bottom: 1px solid $white;
+
+	a{
+		color: $black;
+	}
+}
+
+.tabs-content{
+	margin-top: -1px;
+}
+
+.tabs-content > .content{
+	padding: 20px;
+	border: 1px solid #efefef;
+}
+
+// Header
+.top-bar .name h1 a{
+	font-size: 19px;
+
+	span{
+		color: #DDD;
+		font-size: 18px;
+	}
+}
+
+// Grids
 [class*="grid-without-paddings"] > li{
 	padding: 0px !important;
 }
 
+// Grid Image Links
 [class*="grid-image-links"] > li{
 	a{
 		display: block;
@@ -104,5 +147,50 @@
 			opacity: 1;
 			overflow: auto;
 		}
+	}
+}
+
+// Footer
+#footer{
+	background: $primary-color;
+	padding: 50px 0px 80px 0px;
+
+	.logo_tce{
+		margin: 0px auto 0px auto;
+	  width: 100px;
+	  height: 80px;
+	  background: $white;
+	  text-indent: -999px;
+	  overflow: hidden;
+
+	  -moz-border-radius: 50px / 40px;
+	  -webkit-border-radius: 50px / 40px;
+	  border-radius: 50px / 40px;
+
+		-moz-transform: rotate(-45deg);
+		-webkit-transform: rotate(-45deg);
+	  transform: rotate(-45deg);
+	  position: relative;
+
+	  &:after,
+	  &:before{
+	  	background: $primary-color;
+	  	display: block;
+	  	content: "";
+	  	width: 3px;
+	  	height: 20px;
+	  	position: absolute;
+	  	top: 33px;
+	  	left: 20px;
+		  -moz-border-radius: 3px;
+		  -webkit-border-radius: 3px;
+		  border-radius: 3px;
+	  }
+
+	  &:before{
+			-moz-transform: rotate(-90deg);
+			-webkit-transform: rotate(-90deg);
+		  transform: rotate(-90deg);
+	  }
 	}
 }

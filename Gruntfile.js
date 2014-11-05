@@ -49,5 +49,5 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('assemble');
 
-  grunt.registerTask("default", ["examples", "assemble", "watch"])
+  grunt.registerTask("default", ["examples", "assemble", "bower", "watch"])
 }

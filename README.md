@@ -2,10 +2,15 @@
 
 The Cocktail Experience front tools
 
+## Requirements
+
+* [Node.js](http://nodejs.org)
+* [Grunt](http://gruntjs.com/)
+* [Bower](http://bower.io)
+
 ## Installing
 
-- Install **[bower](http://bower.io/)**
-- Install **grunt-cli** with **npm install -g grunt-cli**
+- Execute **npm install**
 - Execute **bower install**
 - Execute **grunt**
 

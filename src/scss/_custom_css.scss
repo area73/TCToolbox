@@ -194,3 +194,19 @@
 	  }
 	}
 }
+
+// sidebar
+.side-nav li{
+	margin: 0px;
+
+	&.divider{
+		height: 10px;
+	}
+}
+
+// footer jsdocs
+footer > .row {
+	text-align: center;
+	padding: 20px 0px;
+	font-size: 13px;
+}

@@ -26,11 +26,20 @@ module.exports = function(grunt){
         files: ["TCETheme/**/*"],
         tasks: ["sass", "jsdoc"]
       }
+    },
+    bower:{
+      static: {
+        dest:"TCETheme/static/dependencies",
+        options: {
+          expand: true
+        }  
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('default', ["sass", 'jsdoc', "watch"]);
+  grunt.loadNpmTasks('grunt-bower');
+  grunt.registerTask('default', ["sass", 'jsdoc', "bower", "watch"]);
 }

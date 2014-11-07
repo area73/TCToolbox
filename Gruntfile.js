@@ -74,7 +74,10 @@ module.exports = function (grunt) {
         jsdoc: {
             dist: {
                 src: ['src/*.js'],
-                options: { destination: 'docs' }
+                options: {
+                    destination: 'docs',
+                    template: "node_modules/tct-jsdoc-theme/TCETheme"
+                }
             }
         }
     });

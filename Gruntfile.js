@@ -31,7 +31,21 @@ module.exports = function(grunt){
       static: {
         dest:"TCETheme/static/dependencies",
         options: {
-          expand: true
+          expand: true,
+          packageSpecific:{
+            prettify:{
+              files: ["bin/*"]
+            },
+            jquery:{
+              files: ["dist/jquery.min.js"]
+            },
+            foundation:{
+              files: [
+                "js/foundation.min.js",
+                "js/foundation/**/*.js"
+              ]
+            }
+          }
         }  
       }
     }
@@ -41,5 +55,5 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-bower');
-  grunt.registerTask('default', ["sass", 'jsdoc', "bower", "watch"]);
+  grunt.registerTask('default', ["sass", "bower", 'jsdoc', "watch"]);
 }

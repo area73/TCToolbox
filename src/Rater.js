@@ -34,13 +34,14 @@ this.TCT.Rater = (function(){
       this.element.append(this.overlay);
     },
     onTouchEnd: function(e){
+
       if(e.pointerType != "mouse" && e.type == "mousePress" || 
          e.pointerType == "mouse" && e.type == "tap"){
         return;
       }       
       var touches = e.changedPointers,
           firstTouch = _(touches).first(),
-          percent = this.updatePercent(firstTouch.pageX);
+          percent = this.updatePercent(e.center.x);
       if(e.pointerType == "mouse"){
         this.trackMouseEvents();
       }else{

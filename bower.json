@@ -6,7 +6,8 @@
   "private": true,
   "main": [
     "dist/Rater.js",
-    "dist/Rater.css"
+    "dist/Rater.css",
+    "dist/_RaterMixins.css.scss"
   ],
   "dependencies": {
     "jquery": "~1.11.1",

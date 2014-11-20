@@ -24,6 +24,10 @@ this.TCT.Rater = (function(){
       }
       this.element.on("touchstart", this.onTouchStart);
       this.element.on("mousedown", this.onMouseDown);
+      this.element.on("click", function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      });
       this.element.on("tap", this.onTouchEnd);
     },
     prepare: function(){

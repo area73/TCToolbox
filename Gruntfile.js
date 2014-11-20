@@ -78,6 +78,11 @@ module.exports = function (grunt) {
                 files:[
                     {expand: true, cwd: 'src/images', src: ['**/*.png'], dest: 'dist/images'},
                 ]    
+            },
+            scss:{
+                files: [
+                    {src: "src/_RaterMixins.css.scss", dest: "dist/_RaterMixins.css.scss"}
+                ]
             }            
         }
     });

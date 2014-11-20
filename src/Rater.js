@@ -21,7 +21,7 @@ this.TCT.Rater = (function(){
       if((checked = this.inputs.filter(":checked")).length){
         var index = _(this.inputs).indexOf(checked.get(0)) + 1;
         this.setOverlayPercent((100/this.inputs.length)*index);
-      };
+      }
       this.element.on("touchstart", this.onTouchStart);
       this.element.on("mousedown", this.onMouseDown);
       this.element.on("click", function(e){

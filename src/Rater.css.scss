@@ -1,0 +1,12 @@
+@import "RaterMixins.css.scss";
+// Rater styles
+.rater{
+  @extend %rater;
+  &__wrapper{
+    @extend %rater__wrapper;
+    margin-left: 100%;
+  }
+  &__stars{
+    @extend %rater__stars;
+  }
+}

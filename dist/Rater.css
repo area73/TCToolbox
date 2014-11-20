@@ -1,0 +1,33 @@
+.rater {
+  display: inline-block;
+  background-position: left top;
+  width: 170px;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer; }
+
+.rater__stars {
+  background-position: left bottom;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.rater, .rater__stars {
+  background-image: url("./images/rater_bg_2x.png");
+  background-repeat: repeat-x;
+  height: 29px;
+  background-size: 34px 60px; }
+  .no-backgroundsize .rater, .no-backgroundsize .rater__stars {
+    background-image: url("./images/rater_bg_2x.png"); }
+
+.rater__wrapper {
+  overflow: hidden;
+  height: 0;
+  width: 0; }
+
+.rater__wrapper {
+  margin-left: 100%; }

@@ -1,0 +1,18 @@
+{
+  "name": "Rater",
+  "description": "Star rating plugin",
+  "keywords": "star rate jquery",
+  "repository": "git@github.com:the-cocktail/TCToolbox.git#Rater",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^2.0.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-jasmine": "^0.8.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jsdoc": "^0.5.7",
+    "grunt-sass": "^0.16.1",
+    "grunt-sprockets-directives": "^0.1.0"
+  }
+}

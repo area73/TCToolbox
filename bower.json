@@ -9,11 +9,15 @@
     "dist/Rater.css"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
+    "jquery": "~1.11.1",
     "modernizr": "~2.8.3",
     "underscore": "~1.7.0",
-    "tct-foundation": "the-cocktail/TCToolbox#tct-foundation",
-    "hammerjs": "~2.0.4"
+    "toe.js": "visiongeist/toe.js#~3.0.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "tct-foundation": "the-cocktail/TCToolbox#tct-foundation"
+  },
+  "resolutions": {
+    "jquery": "~1.11.1"
+  }
 }

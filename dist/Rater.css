@@ -22,7 +22,7 @@
   height: 29px;
   background-size: 34px 60px; }
   .no-backgroundsize .rater, .no-backgroundsize .rater__stars {
-    background-image: url("./images/rater_bg_2x.png"); }
+    background-image: url("./images/rater_bg_1x.png"); }
 
 .rater__wrapper {
   overflow: hidden;

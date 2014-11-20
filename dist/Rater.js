@@ -1,7 +1,7 @@
 if(!this.TCT) this.TCT = {};
 this.TCT.Rater = (function(){
   var Rater = function(element, options){
-    _.bindAll(this, "onMouseMove", "onMouseUp", "onTouchEnd"); //"onMouseDown"
+    _.bindAll(this, "onMouseMove", "onMouseUp", "onTouchEnd", "onMouseDown", "onTouchStart"); //"onMouseDown"
     this.element = element;
     this.options = $.extend({}, this.defaults, options);
     this.inputs = this.element.find("input[type=radio]");
@@ -22,31 +22,30 @@ this.TCT.Rater = (function(){
         var index = _(this.inputs).indexOf(checked.get(0)) + 1;
         this.setOverlayPercent((100/this.inputs.length)*index);
       }
-      var touches = new Hammer.Manager(this.element.get(0));
-      touches.add(new Hammer.Tap());
-      touches.add(new Hammer.Press({event: "mousePress", time: 10}));
-      touches.on("tap", this.onTouchEnd);
-      touches.on("mousePress", this.onTouchEnd);
+      this.element.on("touchstart", this.onTouchStart);
+      this.element.on("mousedown", this.onMouseDown);
+      this.element.on("tap", this.onTouchEnd);
     },
     prepare: function(){
       this.element.wrapInner("<div class='"+this.options.wrapperClass+"'></div>");
       this.overlay = $("<div class='"+this.options.starsClass+"'></div>");
       this.element.append(this.overlay);
     },
-    onTouchEnd: function(e){
-
-      if(e.pointerType != "mouse" && e.type == "mousePress" || 
-         e.pointerType == "mouse" && e.type == "tap"){
-        return;
-      }       
-      var touches = e.changedPointers,
-          firstTouch = _(touches).first(),
-          percent = this.updatePercent(e.center.x);
-      if(e.pointerType == "mouse"){
+    onTouchStart: function(){
+      this.touch = true; // Set this.touches to true
+    },
+    onMouseDown: function(e){
+      if(!this.touch){ // If a touch event didn't initizlized the events
+        // Do the mouse tracking
+        var percent = this.updatePercent(e.pageX);
         this.trackMouseEvents();
-      }else{
-        this.setPercent(percent);
+      }else{ // Otherwise, do nothing and reset this.touch
+        this.touch = false;
       }
+    },
+    onTouchEnd: function(e){
+      var percent = this.updatePercent(e.pageX);
+      this.setPercent(percent);
     },
     updatePercent: function(pageX){
       var percent = this.getPercent(pageX);

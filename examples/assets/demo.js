@@ -1,6 +1,5 @@
 $(function(){
 	$(".collapsable").collapsable({
-		animated: false,
-    multiple: false
+		animated: true
 	});	
 });

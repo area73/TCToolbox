@@ -31,9 +31,6 @@ this.TCT.Collapsable = (function(TCT){
       this.setElementClasses();
       this.notify();
       this.triggers.on('click',this.onToggle);
-      if(this.options.animated){
-        $(window).on("resize", _.debounce(this.recalculateHeight, 100));
-      }
     },
     addElementClasses: function(){
       this.content
@@ -60,16 +57,12 @@ this.TCT.Collapsable = (function(TCT){
     },
     expand: function() {
       if(this.expanded) return;
+      
+      this.closeGroup();
+
       this.changeState(true);
     },
-    changeState: function(state){
-      this.expanded = state;
-      this.setElementClasses();
-      this.notify();
-    },
-    onToggle:function(e){
-      e.preventDefault();
-
+    closeGroup: function(){
       if(this.group){
         var group_elements = $("[data-collapsable-group="+this.group+"]").filter("."+this.options.expandedClass);
 
@@ -81,7 +74,15 @@ this.TCT.Collapsable = (function(TCT){
             element.expand();
         });
       }
-
+    },
+    changeState: function(state){
+      this.expanded = state;
+      this.setElementClasses();
+      this.notify();
+    },
+    onToggle:function(e){
+      e.preventDefault();
+      
       if(this.expanded){
         this.collapse();
       }else{

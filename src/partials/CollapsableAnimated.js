@@ -1,7 +1,7 @@
 this.TCT.CollapsableAnimated = (function(sup){
   var CollapsableAnimated = function(element, options){
     this.defaults = $.extend({}, sup.prototype.defaults, this.defaults);
-    _.bindAll(this, 'recalculateHeight');
+    _.bindAll(this, 'onWindowResize');
     sup.call(this, element, options);
   };
 
@@ -14,6 +14,10 @@ this.TCT.CollapsableAnimated = (function(sup){
     defaults: {
       animatedClass: "tct-collapsable__content--animated",
       noTransitionClass: "tct-collapsable__content--no-transition"
+    },
+    init: function(){
+      sup.prototype.init.call(this);
+      $(window).on("resize", _.debounce(this.onWindowResize, 100));
     },
     addElementClasses: function(){
       this.element.find(this.options.content)
@@ -28,10 +32,9 @@ this.TCT.CollapsableAnimated = (function(sup){
       this.content.css("height", "");
       sup.prototype.collapse.call(this);
     },
-    recalculateHeight: function(){
+    onWindowResize: function(){
       if(this.expanded){
-        this.content.css({"height": "auto"});
-        this.content.css({"height": this.content.height()});
+        this.calcContentHeight();
       }
     },
     calcContentHeight: function(transition){

@@ -11,6 +11,7 @@ this.TCT.Collapsable = (function(TCT){
     this.expanded = false;
     this.triggers = this.element.find(this.options.toggle);
     this.content = this.element.find(this.options.content);
+    this.group = this.options.group ? this.options.group : this.element.data("collapsable-group");
     this.addElementClasses();
     this.init();
   };
@@ -23,12 +24,16 @@ this.TCT.Collapsable = (function(TCT){
       expandedClass: "tct-collapsable--expanded",
       collapsedClass: "tct-collapsable--collapsed",
       contentClass: "tct-collapsable__content",
-      animated: false
+      animated: false,
+      group: undefined
     },
     init:function() {
       this.setElementClasses();
       this.notify();
       this.triggers.on('click',this.onToggle);
+      if(this.options.animated){
+        $(window).on("resize", _.debounce(this.recalculateHeight, 100));
+      }
     },
     addElementClasses: function(){
       this.content
@@ -64,6 +69,19 @@ this.TCT.Collapsable = (function(TCT){
     },
     onToggle:function(e){
       e.preventDefault();
+
+      if(this.group){
+        var group_elements = $("[data-collapsable-group="+this.group+"]").filter("."+this.options.expandedClass);
+
+        group_elements.each(function(){
+          element = $(this).data("collapsable");
+          if(element.expanded)
+            element.collapse();
+          else
+            element.expand();
+        });
+      }
+
       if(this.expanded){
         this.collapse();
       }else{
@@ -76,6 +94,7 @@ this.TCT.Collapsable = (function(TCT){
 this.TCT.CollapsableAnimated = (function(sup){
   var CollapsableAnimated = function(element, options){
     this.defaults = $.extend({}, sup.prototype.defaults, this.defaults);
+    _.bindAll(this, 'recalculateHeight');
     sup.call(this, element, options);
   };
 
@@ -101,6 +120,12 @@ this.TCT.CollapsableAnimated = (function(sup){
     collapse: function(){
       this.content.css("height", "");
       sup.prototype.collapse.call(this);
+    },
+    recalculateHeight: function(){
+      if(this.expanded){
+        this.content.css({"height": "auto"});
+        this.content.css({"height": this.content.height()});
+      }
     },
     calcContentHeight: function(transition){
       var element = this.content,

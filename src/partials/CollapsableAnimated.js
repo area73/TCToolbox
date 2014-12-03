@@ -1,6 +1,9 @@
 this.TCT.CollapsableAnimated = (function(sup){
   var CollapsableAnimated = function(element, options){
     this.defaults = $.extend({}, sup.prototype.defaults, this.defaults);
+    this.uid = _.uniqueId();
+    this.windowSize = {};
+    this.updateWindowSize();
     _.bindAll(this, 'onWindowResize');
     sup.call(this, element, options);
   };
@@ -17,7 +20,6 @@ this.TCT.CollapsableAnimated = (function(sup){
     },
     init: function(){
       sup.prototype.init.call(this);
-      $(window).on("resize", _.debounce(this.onWindowResize, 100));
     },
     addElementClasses: function(){
       this.element.find(this.options.content)
@@ -27,15 +29,30 @@ this.TCT.CollapsableAnimated = (function(sup){
     expand: function(){
       this.calcContentHeight();
       sup.prototype.expand.call(this);
+      this.startResizeListening();
     },
     collapse: function(){
+      this.stopResizeListening();
       this.content.css("height", "");
       sup.prototype.collapse.call(this);
     },
-    onWindowResize: function(){
-      if(this.expanded){
+    onWindowResize: function(e){
+      var ww = $(window).width(),
+          wh = $(window).height();
+      if(this.expanded && (this.windowSize.width != ww || this.windowSize.height != wh)){
+        this.updateWindowSize(ww, wh);
         this.calcContentHeight();
       }
+    },
+    updateWindowSize: function(ww, wh){
+      this.windowSize.width = ww || $(window).width();
+      this.windowSize.height = wh || $(window).height();
+    },
+    stopResizeListening: function(){
+      $(window).off(".resize_collapsable_"+this.uid);
+    },
+    startResizeListening: function(){
+      $(window).on("resize.resize_collapsable_"+this.uid, _.debounce(this.onWindowResize, 100));
     },
     calcContentHeight: function(transition){
       var element = this.content,

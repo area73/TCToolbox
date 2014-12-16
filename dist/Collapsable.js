@@ -252,7 +252,6 @@ this.TCT.HoverCollapsableStrategy = (function(sup){
           e.preventDefault();
           self.touched = false;
         }else{
-          console.log(e.type);
           self.collapsable.expand();
         }        
       }, 150);
@@ -264,13 +263,11 @@ this.TCT.HoverCollapsableStrategy = (function(sup){
           e.preventDefault();
           self.touched = false;
         }else{
-          console.log(e.type);
           self.collapsable.collapse();
         }        
       }, 150);
     },
     onTap:function(e){
-      console.log(e.type);
       this.touched = true;
       e.preventDefault();
       if(this.collapsable.expanded){

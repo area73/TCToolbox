@@ -10,7 +10,8 @@
   ],
   "dependencies": {
     "jquery": "~2.1.1",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "toe.js": "visiongeist/toe.js#~3.0.6"
   },
   "devDependencies": {
     "jasmine-jquery": "~2.0.5"

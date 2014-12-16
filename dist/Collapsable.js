@@ -1,36 +1,46 @@
 
 
 
+
+
+
 if(!this.TCT) this.TCT = {};
 this.TCT.Collapsable = (function(TCT){
 
   var Collapsable = function(element,options) {
     this.options = $.extend({}, this.defaults, options);
-    _.bindAll(this, 'onToggle');
     this.element = $(element);
     this.expanded = false;
-    this.triggers = this.element.find(this.options.toggle);
+    this.triggers = this.element.find(this.options.triggers);
     this.content = this.element.find(this.options.content);
     this.group = this.options.group ? this.options.group : this.element.data("collapsable-group");
     this.addElementClasses();
     this.init();
   };
 
+  Collapsable.triggerStrategies = {};
+
   //extiendo mis funciones en mi prototipo
   $.extend(Collapsable.prototype,{
     defaults:{
-      toggle: "[data-collapsable-toggle]",
+      triggers: "[data-collapsable-toggle]",
       content: "[data-collapsable-content]",
       expandedClass: "tct-collapsable--expanded",
       collapsedClass: "tct-collapsable--collapsed",
       contentClass: "tct-collapsable__content",
+      triggerWith: "click",
       animated: false,
       group: undefined
     },
     init:function() {
       this.setElementClasses();
       this.notify();
-      this.triggers.on('click',this.onToggle);
+      var triggerStrategy = this.getTriggerStrategy();
+      triggerStrategy.init();
+    },
+    getTriggerStrategy: function(){
+      var triggerClass = Collapsable.triggerStrategies[this.options.triggerWith];
+      return new triggerClass(this);
     },
     addElementClasses: function(){
       this.content
@@ -57,9 +67,7 @@ this.TCT.Collapsable = (function(TCT){
     },
     expand: function() {
       if(this.expanded) return;
-      
       this.closeGroup();
-
       this.changeState(true);
     },
     closeGroup: function(){
@@ -79,15 +87,6 @@ this.TCT.Collapsable = (function(TCT){
       this.expanded = state;
       this.setElementClasses();
       this.notify();
-    },
-    onToggle:function(e){
-      e.preventDefault();
-      
-      if(this.expanded){
-        this.collapse();
-      }else{
-        this.expand();
-      }
     }
   });
   return Collapsable;
@@ -176,6 +175,117 @@ this.TCT.CollapsableAnimated = (function(sup){
 
   return CollapsableAnimated;
 })(TCT.Collapsable);
+this.TCT.CollapsableTriggerStrategy = (function(){
+  var CollapsableTriggerStrategy = function(collapsable, options){
+    this.options = $.extend({}, this.defaults, options);
+    this.collapsable = collapsable;
+  };
+
+  $.extend(CollapsableTriggerStrategy.prototype, {
+    init: function(){
+      this.listen();
+    }
+  });
+
+  return CollapsableTriggerStrategy;
+})();
+
+this.TCT.ClickCollapsableStrategy = (function(sup){
+  
+  var ClickCollapsableStrategy = function(collapsable){
+    _.bindAll(this, "onToggle");
+    sup.call(this, collapsable);
+  };
+
+  var tmp = function(){};
+  tmp.prototype = sup.prototype;
+  ClickCollapsableStrategy.prototype = new tmp();
+  ClickCollapsableStrategy.prototype.constructor = ClickCollapsableStrategy;
+
+  $.extend(ClickCollapsableStrategy.prototype, {
+    listen: function(){
+      this.collapsable.triggers.on('click',this.onToggle);
+    },
+    onToggle:function(e){
+      e.preventDefault();
+      if(this.collapsable.expanded){
+        this.collapsable.collapse();
+      }else{
+        this.collapsable.expand();
+      }
+    }
+  });
+
+  TCT.Collapsable.triggerStrategies.click = ClickCollapsableStrategy;
+
+  return ClickCollapsableStrategy;
+
+})(this.TCT.CollapsableTriggerStrategy);
+this.TCT.HoverCollapsableStrategy = (function(sup){
+  
+  var HoverCollapsableStrategy = function(collapsable){
+    _.bindAll(this, "onTap", "onMouseOver", "onMouseOut");
+    this.touched = false;
+    sup.call(this, collapsable);
+  };
+
+  var tmp = function(){};
+  tmp.prototype = sup.prototype;
+  HoverCollapsableStrategy.prototype = new tmp();
+  HoverCollapsableStrategy.prototype.constructor = HoverCollapsableStrategy;
+
+  $.extend(HoverCollapsableStrategy.prototype, {
+    listen: function(){
+      this.collapsable.triggers
+        .on('mouseenter',this.onMouseOver)
+        .on('tap', this.onTap);
+      this.collapsable.element
+        .on('mouseleave',this.onMouseOut)
+        .on('touchstart touchmove touchend', function (event) {
+            event.preventDefault();
+        });
+    },
+    onMouseOver: function(e){
+      var self = this;
+      _.delay(function(){
+        if(self.touched){
+          e.preventDefault();
+          self.touched = false;
+        }else{
+          console.log(e.type);
+          self.collapsable.expand();
+        }        
+      }, 150);
+    },
+    onMouseOut: function(e){
+      var self = this;
+      _.delay(function(){
+        if(self.touched){
+          e.preventDefault();
+          self.touched = false;
+        }else{
+          console.log(e.type);
+          self.collapsable.collapse();
+        }        
+      }, 150);
+    },
+    onTap:function(e){
+      console.log(e.type);
+      this.touched = true;
+      e.preventDefault();
+      if(this.collapsable.expanded){
+        this.collapsable.collapse();
+      }else{
+        this.collapsable.expand();
+      }
+    }
+  });
+
+  TCT.Collapsable.triggerStrategies.hover = HoverCollapsableStrategy;
+
+  return HoverCollapsableStrategy;
+
+})(this.TCT.CollapsableTriggerStrategy);
 $.fn.collapsable = function(options){
   var collapsableClass = (options && options.animated) ? TCT.CollapsableAnimated : TCT.Collapsable;
   return $(this).each(function(){

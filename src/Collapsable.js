@@ -1,36 +1,46 @@
 //= require_self
 //= require partials/CollapsableAnimated
+//= require partials/CollapsableTriggerStrategy
+//= require partials/ClickCollapsableStrategy
+//= require partials/HoverCollapsableStrategy
 //= require partials/$.fn.collapsable.js
 if(!this.TCT) this.TCT = {};
 this.TCT.Collapsable = (function(TCT){
 
   var Collapsable = function(element,options) {
     this.options = $.extend({}, this.defaults, options);
-    _.bindAll(this, 'onToggle');
     this.element = $(element);
     this.expanded = false;
-    this.triggers = this.element.find(this.options.toggle);
+    this.triggers = this.element.find(this.options.triggers);
     this.content = this.element.find(this.options.content);
     this.group = this.options.group ? this.options.group : this.element.data("collapsable-group");
     this.addElementClasses();
     this.init();
   };
 
+  Collapsable.triggerStrategies = {};
+
   //extiendo mis funciones en mi prototipo
   $.extend(Collapsable.prototype,{
     defaults:{
-      toggle: "[data-collapsable-toggle]",
+      triggers: "[data-collapsable-toggle]",
       content: "[data-collapsable-content]",
       expandedClass: "tct-collapsable--expanded",
       collapsedClass: "tct-collapsable--collapsed",
       contentClass: "tct-collapsable__content",
+      triggerWith: "click",
       animated: false,
       group: undefined
     },
     init:function() {
       this.setElementClasses();
       this.notify();
-      this.triggers.on('click',this.onToggle);
+      var triggerStrategy = this.getTriggerStrategy();
+      triggerStrategy.init();
+    },
+    getTriggerStrategy: function(){
+      var triggerClass = Collapsable.triggerStrategies[this.options.triggerWith];
+      return new triggerClass(this);
     },
     addElementClasses: function(){
       this.content
@@ -57,9 +67,7 @@ this.TCT.Collapsable = (function(TCT){
     },
     expand: function() {
       if(this.expanded) return;
-      
       this.closeGroup();
-
       this.changeState(true);
     },
     closeGroup: function(){
@@ -79,15 +87,6 @@ this.TCT.Collapsable = (function(TCT){
       this.expanded = state;
       this.setElementClasses();
       this.notify();
-    },
-    onToggle:function(e){
-      e.preventDefault();
-      
-      if(this.expanded){
-        this.collapse();
-      }else{
-        this.expand();
-      }
     }
   });
   return Collapsable;

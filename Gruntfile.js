@@ -40,7 +40,12 @@ module.exports = function (grunt) {
                 tasks: ['test']
             }
         },
-        jshint: { scripts: ['src/**/*.js'] },
+        jshint: {
+            options:{
+                debug: true
+            },
+            scripts: ['src/**/*.js']
+        },
         jasmine: {
             specs: {
                 src: 'dist/**/*.js',

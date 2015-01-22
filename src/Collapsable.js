@@ -30,7 +30,8 @@ this.TCT.Collapsable = (function(TCT){
       contentClass: "tct-collapsable__content",
       triggerWith: "click",
       animated: false,
-      group: undefined
+      group: undefined,
+      goToLink: false
     },
     init:function() {
       this.setElementClasses();
@@ -69,6 +70,12 @@ this.TCT.Collapsable = (function(TCT){
       if(this.expanded) return;
       this.closeGroup();
       this.changeState(true);
+
+      if(this.options.goToLink){
+        $("."+this.options.contentClass+".visible").css({"display": "none"});
+        $("html, body").animate({ scrollTop: $(event.currentTarget).offset().top }, 300);
+        $("."+this.options.contentClass+".visible").css({"display": "block"});
+      }
     },
     closeGroup: function(){
       if(this.group){

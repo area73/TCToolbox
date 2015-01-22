@@ -1,6 +1,7 @@
 $(function(){
 	$(".collapsable").collapsable({
-		animated: true
+		animated: true,
+    goToLink: true
 	});	
 
   $(".collapsable_mouseover").collapsable({

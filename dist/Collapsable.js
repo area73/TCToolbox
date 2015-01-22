@@ -31,7 +31,8 @@ this.TCT.Collapsable = (function(TCT){
       triggerWith: "click",
       animated: false,
       group: undefined,
-      goToLink: false
+      goToLink: false,
+      offset: 0
     },
     init:function() {
       this.setElementClasses();
@@ -73,7 +74,7 @@ this.TCT.Collapsable = (function(TCT){
 
       if(this.options.goToLink){
         $("."+this.options.contentClass+".visible").css({"display": "none"});
-        $("html, body").animate({ scrollTop: $(event.currentTarget).offset().top }, 300);
+        $("html, body").animate({ scrollTop: ($(event.currentTarget).offset().top - this.options.offset) }, 300);
         $("."+this.options.contentClass+".visible").css({"display": "block"});
       }
     },

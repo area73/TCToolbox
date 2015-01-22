@@ -1,7 +1,8 @@
 $(function(){
 	$(".collapsable").collapsable({
 		animated: true,
-    goToLink: true
+    goToLink: true,
+    offset: 20
 	});	
 
   $(".collapsable_mouseover").collapsable({
